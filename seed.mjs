@@ -14,14 +14,14 @@ const client = new MongoClient(uri, {
 
 // Sample book data
 const samplebooks = [
-  { title: "Alice Johnson", author: 20, genre: "A" },
-  { title: "Bob Smith", author: 19, genre: "B+" },
-  { title: "Charlie Brown", author: 21, genre: "A-" },
-  { title: "Diana Prince", author: 18, genre: "A+" },
-  { title: "Ethan Hunt", author: 22, genre: "B" },
-  { title: "Fiona Gallagher", author: 19, genre: "B-" },
-  { title: "George Washington", author: 20, genre: "A" },
-  { title: "Hannah Montana", author: 18, genre: "C+" }
+  { title: "", author: "", genre: "" },
+  { title: "", author: "", genre: "" },
+  { title: "", author: "", genre: "" },
+  { title: "", author: "", genre: "" },
+  { title: "", author: "", genre: "" },
+  { title: "", author: "", genre: "" },
+  { title: "", author: "", genre: "" },
+  { title: "", author: "", genre: "" }
 ];
 
 async function seedDatabase() {

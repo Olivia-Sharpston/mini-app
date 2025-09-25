@@ -1,3 +1,5 @@
+// for .env - cg8yvmk or taug6
+
 import 'dotenv/config'
 import express from 'express'
 import { fileURLToPath } from 'url';
