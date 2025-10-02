@@ -66,18 +66,37 @@ app.get('/api/books', async (req, res) => {
 
 app.delete('/api/books/:id', async (req, res) => {
   try {
-    const result = await db.collection('books').deleteOne({ _id: new ObjectId(req.params.id) });
-    if (result.deletedCount === 1) {
-      res.status(200).json({ message: 'Book deleted' });
-    } else {
-      res.status(404).json({ error: 'Book not found' });
-    }
+    const result = await db.collection('books').deleteMany({});
+    console.log(`🧹 Bookshelf cleaned!`);
+
+    res.json({
+      message: `Database cleaned successfully!`
+    });
   } catch (error) {
-    console.error('Error deleting book:', error);
-    res.status(500).json({ error: 'Failed to delete book' });
+    res.status(500).json({ error: 'Failed to cleanup database: ' + error.message });
   }
 });
 
 
+// CREATE - Add a new student
+app.post('/api/books', async (req, res) => {
+  try {
+    const { title, author, genre } = req.body;
+    
+    // Simple validation
+    if (!title || !author || !genre) {
+      return res.status(400).json({ error: 'Title, author, and genre are required' });
+    }
 
-connectDB();
+    const book = { title, author, genre };
+    const result = await db.collection('books').insertOne(book);
+    
+    res.status(201).json({ 
+      message: 'Book added successfully',
+      bookId: result.insertedId,
+      book: { ...book, _id: result.insertedId }
+    });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to add book: ' + error.message });
+  }
+});

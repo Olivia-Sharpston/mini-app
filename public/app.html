@@ -150,9 +150,8 @@
                     showMessage(`✅ Book "${book.title}" added successfully!`, 'success');
                     document.getElementById('addBookForm').reset();
                     loadBooks(); // Refresh the list
-                } else { {
+                } else { 
                     showMessage(`❌ Error: ${result.error}`, 'danger');
-                    }
                 }
             } catch (error) {
                 showMessage(`❌ Network error: ${error.message}`, 'danger');
