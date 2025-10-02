@@ -189,10 +189,10 @@
                                     data-genre="${book.genre}">${book._id}</span></small>
                                 ${book.createdBy ? `<br><small class="text-muted">Created by: ${book.createdBy}</small>` : ''}
                             </div>
-                            <button class="btn btn-outline-danger btn-sm" 
+                            <button 
+                                class="btn btn-outline-danger btn-sm delete-btn" 
                                 data-book-id="${book._id}" 
-                                data-book-title="${book.title}" 
-                                class="delete-btn">
+                                data-book-title="${book.title}">
                                 🗑️ Delete
                             </button>
                         </div>
@@ -211,13 +211,22 @@
                 });
                 
                 // Add click event listeners for delete buttons
-                document.querySelectorAll('.delete-btn').forEach(button => {
-                    button.addEventListener('click', function() {
-                        const id = this.getAttribute('data-book-id');
-                        const title = this.getAttribute('data-book-title');
+                // document.querySelectorAll('.delete-btn').forEach(button => {
+                //     button.addEventListener('click', function() {
+                //         const id = this.getAttribute('data-book-id');
+                //         const title = this.getAttribute('data-book-title');
+                //         deleteBook(id, title);
+                //     });
+                // });
+
+                document.getElementById('booksList').addEventListener('click', function(e) {
+                    if (e.target && e.target.classList.contains('delete-btn')) {
+                        const id = e.target.getAttribute('data-book-id');
+                        const title = e.target.getAttribute('data-book-title');
                         deleteBook(id, title);
-                    });
+                    }
                 });
+
                 
                 showMessage(`📋 Loaded ${books.length} books`, 'info');
             } catch (error) {
