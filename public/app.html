@@ -165,78 +165,63 @@
 
         // READ - Load all books
         async function loadBooks() {
-
             try {
                 const response = await fetch('/api/books');
                 const books = await response.json();
 
                 const booksList = document.getElementById('booksList');
-                
-                if (books.length === 0) {
-                    booksList.innerHTML = '<p class="text-muted">No books found. Try seeding the database!</p>';
-                    return;
-                }
+                booksList.innerHTML = '';
 
-
-
-                //something funky here
-                booksList.innerHTML = books.map(book => `
-                    <div class="card mb-2">
-                        <div class="card-body d-flex justify-content-between align-items-center">
-                            <div>
-                                <strong>${book.title}</strong> (Author: ${book.author}, Genre: ${book.genre})
-                                <br>
-                                <small class="text-muted">ID: <span class="book-id" style="cursor: pointer; text-decoration: underline;" 
-                                    data-id="${book._id}" 
-                                    data-title="${book.title}" 
-                                    data-author="${book.author}" 
-                                    data-genre="${book.genre}">${book._id}</span></small>
-                                ${book.createdBy ? `<br><small class="text-muted">Created by: ${book.createdBy}</small>` : ''}
-                            </div>
-                            <button 
-                                class="btn btn-outline-danger btn-sm delete-btn" 
+                books.forEach(book => {
+                booksList.innerHTML += `
+                    <div class="card mb-2 shadow-sm">
+                    <div class="card-body d-flex justify-content-between align-items-center">
+                        <div>
+                        <h5 class="mb-1">
+                            <span class="book-id" 
+                                data-id="${book._id}" 
+                                data-title="${book.title}" 
+                                data-author="${book.author}" 
+                                data-genre="${book.genre}" 
+                                style="cursor:pointer; text-decoration:underline;">
+                            ${book._id}
+                            </span>
+                        </h5>
+                        <p class="mb-0"><strong>Title:</strong> ${book.title}</p>
+                        <p class="mb-0"><strong>Author:</strong> ${book.author}</p>
+                        <p class="mb-0"><strong>Genre:</strong> ${book.genre}</p>
+                        </div>
+                        <button class="btn btn-outline-danger btn-sm delete-btn" 
                                 data-book-id="${book._id}" 
                                 data-book-title="${book.title}">
-                                🗑️ Delete
-                            </button>
-                        </div>
+                        🗑️ Delete
+                        </button>
                     </div>
-                `).join('');
-                
-                // Add click event listeners for book IDs
-                document.querySelectorAll('.book-id').forEach(span => {
-                    span.addEventListener('click', function() {
-                        const id = this.getAttribute('data-id');
-                        const title = this.getAttribute('data-title');
-                        const author = this.getAttribute('data-author');
-                        const genre = this.getAttribute('data-genre');
-                        fillUpdateForm(id, title, author, genre);
-                    });
-                });
-                
-                // Add click event listeners for delete buttons
-                // document.querySelectorAll('.delete-btn').forEach(button => {
-                //     button.addEventListener('click', function() {
-                //         const id = this.getAttribute('data-book-id');
-                //         const title = this.getAttribute('data-book-title');
-                //         deleteBook(id, title);
-                //     });
-                // });
-
-                document.getElementById('booksList').addEventListener('click', function(e) {
-                    if (e.target && e.target.classList.contains('delete-btn')) {
-                        const id = e.target.getAttribute('data-book-id');
-                        const title = e.target.getAttribute('data-book-title');
-                        deleteBook(id, title);
-                    }
+                    </div>
+                `;
                 });
 
-                
-                showMessage(`📋 Loaded ${books.length} books`, 'info');
             } catch (error) {
                 showMessage(`❌ Error loading books: ${error.message}`, 'danger');
             }
         }
+
+        document.getElementById('booksList').addEventListener('click', function(e) {
+            if (e.target && e.target.classList.contains('delete-btn')) {
+                const id = e.target.getAttribute('data-book-id');
+                const title = e.target.getAttribute('data-book-title');
+                deleteBook(id, title);
+            }
+
+            if (e.target && e.target.classList.contains('book-id')) {
+                const id = e.target.getAttribute('data-id');
+                const title = e.target.getAttribute('data-title');
+                const author = e.target.getAttribute('data-author');
+                const genre = e.target.getAttribute('data-genre');
+                fillUpdateForm(id, title, author, genre);
+            }
+            });
+
 
         // Fill update form when clicking on book ID
         function fillUpdateForm(id, title, author, genre) {
