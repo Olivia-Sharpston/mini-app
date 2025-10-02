@@ -17,6 +17,8 @@ console.log("get .env uri:", uri);
 app.use(express.urlencoded({ extended: true })); // Parse form data 
 app.use(express.static(join(__dirname, 'public')));
 app.use(express.json());
+app.use(express.static('public'));
+
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
