@@ -24,8 +24,8 @@ const samplebooks = [
   { title: "The Deal", author: "Elle Kennedy", genre: "New Adult Romance" }
 ];
 
-async function seedDatabase() {
-  try {
+export async function seedDatabase() {
+    try {
     // Connect to MongoDB
     await client.connect();
     console.log("Connected to MongoDB Atlas!");
@@ -62,6 +62,3 @@ async function seedDatabase() {
     console.log("\n🔌 Database connection closed");
   }
 }
-
-// Run the seed function
-seedDatabase().catch(console.dir);

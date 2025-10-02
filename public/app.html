@@ -18,7 +18,8 @@
                         <div class="card-body text-center">
                             <h5 class="card-title">🦎 Book Management and Recs 🦎</h5>
                             <button class="btn btn-success me-2" onclick="seedDatabase()">🤩 Add Recommendations</button>
-                            <button class="btn btn-danger" onclick="cleanupDatabase()">📔 Remove Recommendations</button>
+                            <button onclick="cleanupDatabase()" class="btn btn-danger">🧹 Delete All Books</button>
+
                         </div>
                     </div>
                 </div>
@@ -327,34 +328,27 @@
             }
         }
 
-
-
-
-// This is the same as previous... fix this
         // Cleanup Database
-        async function seedDatabase() {
-            if (!confirm('This will add recommended books to the database. Continue?')) {
-                return;
-            }
-
+        async function cleanupDatabase() {
             try {
-                showMessage('🤩 Adding recommendations...', 'info');
-                const response = await fetch('/api/seed', {
-                    method: 'POST'
+                const response = await fetch('/api/books', {
+                method: 'DELETE'
                 });
 
                 const result = await response.json();
-                
+
                 if (response.ok) {
-                    showMessage(`✅ ${result.message}`, 'success');
-                    loadBooks(); // Refresh the list
+                showMessage(`✅ ${result.message}`, 'success');
+                loadBooks(); // Refresh the list
                 } else {
-                    showMessage(`❌ Error: ${result.error}`, 'danger');
+                showMessage(`❌ Error: ${result.error}`, 'danger');
                 }
             } catch (error) {
                 showMessage(`❌ Network error: ${error.message}`, 'danger');
             }
-        }
+            }
+
+
 
 
         // Load books when page loads

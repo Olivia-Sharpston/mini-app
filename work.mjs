@@ -64,16 +64,12 @@ app.get('/api/books', async (req, res) => {
   }
 });
 
-app.delete('/api/books/:id', async (req, res) => {
+app.delete('/api/books', async (req, res) => {
   try {
     const result = await db.collection('books').deleteMany({});
-    console.log(`🧹 Bookshelf cleaned!`);
-
-    res.json({
-      message: `Database cleaned successfully!`
-    });
+    res.json({ message: `Deleted ${result.deletedCount} books.` });
   } catch (error) {
-    res.status(500).json({ error: 'Failed to cleanup database: ' + error.message });
+    res.status(500).json({ error: 'Failed to delete books: ' + error.message });
   }
 });
 
@@ -132,5 +128,16 @@ app.put('/api/books/:id', async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ error: 'Failed to update book: ' + error.message });
+  }
+});
+
+import { seedDatabase } from './seed.mjs';
+
+app.post('/api/seed', async (req, res) => {
+  try {
+    await seedDatabase();
+    res.status(201).json({ message: 'Database seeded successfully!' });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to seed database: ' + error.message });
   }
 });
