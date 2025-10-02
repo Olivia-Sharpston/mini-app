@@ -1,7 +1,8 @@
 {
   "name": "fictional-fortnight-hello-express",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "node work.mjs",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node work.mjs"
