@@ -14,14 +14,14 @@ const client = new MongoClient(uri, {
 
 // Sample book data
 const samplebooks = [
-  { title: "", author: "", genre: "" },
-  { title: "", author: "", genre: "" },
-  { title: "", author: "", genre: "" },
-  { title: "", author: "", genre: "" },
-  { title: "", author: "", genre: "" },
-  { title: "", author: "", genre: "" },
-  { title: "", author: "", genre: "" },
-  { title: "", author: "", genre: "" }
+  { title: "Fourth Wing", author: "Rebecca Yarros", genre: "Fantasy Romance" },
+  { title: "The Cruel Prince", author: "Holly Black", genre: "YA Fantasy" },
+  { title: "Once Upon a Broken Heart", author: "Stephanie Garber", genre: "YA Fantasy Romance" },
+  { title: "Legendborn", author: "Tracy Deonn", genre: "YA Urban Fantasy" },
+  { title: "The Love Hypothesis", author: "Ali Hazelwood", genre: "Contemporary Romance" },
+  { title: "It Ends With Us", author: "Colleen Hoover", genre: "Contemporary Romance" },
+  { title: "The Spanish Love Deception", author: "Elene Armas", genre: "Contemporary Romance" },
+  { title: "The Deal", author: "Elle Kennedy", genre: "New Adult Romance" }
 ];
 
 async function seedDatabase() {
@@ -50,7 +50,8 @@ async function seedDatabase() {
     // Display inserted books
     console.log("\n📚 Sample books added:");
     samplebooks.forEach((book, index) => {
-      console.log(`${index + 1}. ${book.name} (Author: ${book.author}, Genre: ${book.genre})`);
+      console.log(`${index + 1}. ${book.title} (Author: ${book.author}, Genre: ${book.genre})`);
+
     });
 
   } catch (error) {
