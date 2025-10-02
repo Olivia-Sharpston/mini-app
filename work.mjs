@@ -78,7 +78,7 @@ app.delete('/api/books/:id', async (req, res) => {
 });
 
 
-// CREATE - Add a new student
+// CREATE - Add a new book
 app.post('/api/books', async (req, res) => {
   try {
     const { title, author, genre } = req.body;
@@ -98,5 +98,39 @@ app.post('/api/books', async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ error: 'Failed to add book: ' + error.message });
+  }
+});
+
+// UPDATE - Update a book by ID
+app.put('/api/books/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, author, genre } = req.body;
+
+    // Validate ObjectId
+    if (!ObjectId.isValid(id)) {
+      return res.status(400).json({ error: 'Invalid book ID' });
+    }
+
+    const updateData = {};
+    if (title) updateData.title = title;
+    if (author) updateData.author = author;
+    if (genre) updateData.genre = genre;
+
+    const result = await db.collection('books').updateOne(
+      { _id: new ObjectId(id) },
+      { $set: updateData }
+    );
+
+    if (result.matchedCount === 0) {
+      return res.status(404).json({ error: 'book not found' });
+    }
+
+    res.json({ 
+      message: 'book updated successfully',
+      modifiedCount: result.modifiedCount 
+    });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to update book: ' + error.message });
   }
 });
