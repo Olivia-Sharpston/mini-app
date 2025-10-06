@@ -1,11 +1,11 @@
 {
   "name": "fictional-fortnight-hello-express",
   "version": "1.0.0",
-  "main": "node work.mjs",
+  "main": "node main.mjs",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node work.mjs"
+    "start": "node main.mjs"
   },
   "keywords": [],
   "author": "",

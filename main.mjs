@@ -42,7 +42,7 @@ async function connectDB(){
 }
 connectDB();
 
-// send to an html file
+// Send to an html file
 app.get('/', (req, res) => {
   res.sendFile(join(__dirname, 'public', 'app.html')) 
 })
@@ -56,6 +56,7 @@ app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`)
 })
 
+// Finds the recommendation books from the collection
 app.get('/api/books', async (req, res) => {
   try {
     const books = await db.collection('books').find().toArray();
@@ -66,6 +67,7 @@ app.get('/api/books', async (req, res) => {
   }
 });
 
+// DELETE - Deletes all of the books
 app.delete('/api/books', async (req, res) => {
   try {
     const result = await db.collection('books').deleteMany({});
@@ -134,7 +136,7 @@ app.put('/api/books/:id', async (req, res) => {
 });
 
 import { seedDatabase } from './seed.mjs';
-
+// Seeds the database with book recommendations
 app.post('/api/seed', async (req, res) => {
   try {
     await seedDatabase();
@@ -144,6 +146,7 @@ app.post('/api/seed', async (req, res) => {
   }
 });
 
+// DELETE - Deletes just one book
 app.delete('/api/books/:id', async (req, res) => {
   try {
     const { id } = req.params;
